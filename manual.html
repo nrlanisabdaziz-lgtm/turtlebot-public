@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Companion TurtleBot | User Manual</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f3f3f3;
+    color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.container {
+    width: 900px;
+    max-width: 100%;
+    background: #ffffff;
+    border-radius: 25px;
+    padding: 30px;
+    border-top: 8px solid #f4a62a;
+    box-shadow: 0 12px 35px rgba(80, 80, 80, 0.15);
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #444;
+    background: #fff4c7;
+    border: 2px solid #f4c542;
+    transition: 0.2s;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    background: #ffe49a;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+.microphone-page {
+    background: #f4a62a;
+    color: white;
+    border-color: #f4a62a;
+}
+
+.manual-page {
+    background: #fff4c7;
+    color: #555;
+    border-color: #f4c542;
+}
+
+.title {
+    text-align: center;
+    color: #444;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #888;
+    margin-bottom: 25px;
+}
+
+.robot {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.robot-face {
+    width: 220px;
+    height: 150px;
+    background: #eeeeee;
+    border-radius: 45px;
+    border: 5px solid #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.eye {
+    width: 35px;
+    height: 50px;
+    background: #444;
+    border-radius: 50%;
+    border: 5px solid #f4c542;
+}
+
+.status {
+    text-align: center;
+    color: #777;
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+.chat {
+    background: #f7f7f7;
+    border: 2px solid #eeeeee;
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 180px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.message {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 15px;
+    max-width: 80%;
+    line-height: 1.5;
+}
+
+.user {
+    background: #fff0b8;
+    margin-left: auto;
+    text-align: right;
+    border-right: 5px solid #f4c542;
+}
+
+.bot {
+    background: #e5e5e5;
+    border-left: 5px solid #f4a62a;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+button {
+    border: none;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    font-size: 38px;
+    cursor: pointer;
+    background: #f4a62a;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: #e89118;
+}
+
+button.listening {
+    background: #f4c542;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.08);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.hint {
+    text-align: center;
+    color: #888;
+    margin-top: 15px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 25px;
+    }
+
+    .robot-face {
+        width: 190px;
+        height: 130px;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+}
+
+
+/* USER MANUAL CONTENT */
+
+.manual-content {
+    width: 100%;
+}
+
+.manual-content section {
+    margin-bottom: 25px;
+}
+
+.manual-content h2 {
+    color: #444;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.manual-content h3,
+.manual-content h4 {
+    color: #444;
+}
+
+.manual-content p {
+    color: #777;
+    line-height: 1.7;
+}
+
+.manual-content .text-white {
+    color: #444 !important;
+}
+
+.manual-content .text-slate-400 {
+    color: #777 !important;
+}
+
+.manual-content .text-teal-400 {
+    color: #f4a62a !important;
+}
+
+.manual-content .text-purple-400 {
+    color: #d88a00 !important;
+}
+
+.manual-content .text-amber-400 {
+    color: #e5a900 !important;
+}
+
+.manual-content .bg-slate-800,
+.manual-content .bg-slate-800\/60,
+.manual-content .bg-slate-800\/80,
+.manual-content .bg-slate-800\/40 {
+    background: #f9f9f9 !important;
+    border: 2px solid #eeeeee !important;
+    border-radius: 15px !important;
+}
+
+.manual-content .bg-slate-900 {
+    background: #f7f7f7 !important;
+}
+
+.manual-content .code-block {
+    background: #3f3f3f !important;
+    color: #fff4c7 !important;
+    border-left: 5px solid #f4a62a;
+}
+
+.manual-content .border-teal-500\/50 {
+    border-color: #f4a62a !important;
+}
+
+.manual-content .bg-teal-500\/20 {
+    background: #fff0b8 !important;
+}
+
+.manual-content .border-slate-700,
+.manual-content .border-slate-800 {
+    border-color: #e5e5e5 !important;
+}
+
+.manual-content .space-y-6 > * + * {
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .manual-content h2 {
+        font-size: 22px;
+    }
+
+    .manual-content {
+        font-size: 14px;
+    }
+}
+</style>
+
+<style>
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+}
+
+body {
+    padding: 0 !important;
+}
+
+.container {
+    width: 900px;
+    max-width: calc(100vw - 30px) !important;
+    overflow: hidden;
+}
+
+.manual-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden;
+}
+
+.manual-content section,
+.manual-content div {
+    max-width: 100%;
+}
+
+.manual-content pre {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+}
+
+.manual-content img,
+.manual-content table {
+    max-width: 100% !important;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: calc(100vw - 30px) !important;
+        max-width: calc(100vw - 30px) !important;
+        margin: 15px auto !important;
+        padding: 20px !important;
+        overflow: hidden !important;
+    }
+
+    .manual-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .manual-content section {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .manual-content .grid {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .manual-content .flex {
+        max-width: 100% !important;
+    }
+
+    .manual-content pre {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        white-space: pre;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="navigation">
+        <a href="index.html" class="nav-button microphone-page">🎙️ Microphone</a>
+        <a href="/manual" class="nav-button manual-page">📖 User Manual</a>
+    </div>
+
+    <div class="title">
+        🤖 AI Companion TurtleBot
+    </div>
+
+    <div class="subtitle">
+        User Manual & System Guide
+    </div>
+
+    <div class="manual-content">
+        <!-- 1. System Overview -->
+    <section id="overview" class="space-y-6">
+      <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-layer-group text-teal-400"></i> System Overview
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700">
+          <i class="fa-solid fa-brain text-teal-400 text-2xl mb-3"></i>
+          <h3 class="font-semibold text-white mb-2">Intent Parsing</h3>
+          <p class="text-sm text-slate-400">Processes voice input via Google Gemini to infer tasks and produce validated structured JSON parameters.</p>
+        </div>
+        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700">
+          <i class="fa-solid fa-arrows-split-up-and-left text-teal-400 text-2xl mb-3"></i>
+          <h3 class="font-semibold text-white mb-2">ROS 2 Navigation</h3>
+          <p class="text-sm text-slate-400">Maps high-level goals into velocity twists (<code class="text-teal-300">geometry_msgs/Twist</code>) and Nav2 navigation goals.</p>
+        </div>
+        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700">
+          <i class="fa-solid fa-shield-halved text-teal-400 text-2xl mb-3"></i>
+          <h3 class="font-semibold text-white mb-2">Hardware Safety Guard</h3>
+          <p class="text-sm text-slate-400">Hard real-time velocity limits, LiDAR collision overrides, and emergency break fallback routines.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. System Architecture -->
+    <section id="architecture" class="space-y-6">
+      <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-network-wired text-teal-400"></i> Architecture Pipeline
+      </h2>
+      <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-700">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center">
+          <div class="bg-slate-900 p-4 rounded-lg border border-slate-700 flex-1 w-full">
+            <span class="text-xs uppercase tracking-wider text-slate-500 font-bold">Input Layer</span>
+            <p class="font-semibold text-white mt-1">Microphone / Audio</p>
+            <p class="text-xs text-slate-400">Voice command ingestion</p>
+          </div>
+          <i class="fa-solid fa-arrow-right text-slate-500 hidden md:block"></i>
+          <div class="bg-slate-900 p-4 rounded-lg border border-teal-500/50 flex-1 w-full">
+            <span class="text-xs uppercase tracking-wider text-teal-400 font-bold">Reasoning Layer</span>
+            <p class="font-semibold text-white mt-1">Gemini AI Model</p>
+            <p class="text-xs text-slate-400">JSON schema output</p>
+          </div>
+          <i class="fa-solid fa-arrow-right text-slate-500 hidden md:block"></i>
+          <div class="bg-slate-900 p-4 rounded-lg border border-slate-700 flex-1 w-full">
+            <span class="text-xs uppercase tracking-wider text-slate-500 font-bold">Control Layer</span>
+            <p class="font-semibold text-white mt-1">Python ROS 2 Node</p>
+            <p class="text-xs text-slate-400">Safety & twist validation</p>
+          </div>
+          <i class="fa-solid fa-arrow-right text-slate-500 hidden md:block"></i>
+          <div class="bg-slate-900 p-4 rounded-lg border border-slate-700 flex-1 w-full">
+            <span class="text-xs uppercase tracking-wider text-slate-500 font-bold">Actuation</span>
+            <p class="font-semibold text-white mt-1">TurtleBot3 Base</p>
+            <p class="text-xs text-slate-400">Motors & LiDAR feedback</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Quickstart & Setup -->
+    <section id="setup" class="space-y-6">
+      <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-terminal text-teal-400"></i> Setup & Launch Guide
+      </h2>
+      <div class="space-y-4">
+        <!-- Step 1 -->
+        <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-800">
+          <h3 class="text-white font-semibold flex items-center gap-2">
+            <span class="bg-teal-500/20 text-teal-400 w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span>
+            Set Environment Variables
+          </h3>
+          <p class="text-sm text-slate-400 my-2">Set your Google Gemini API key and specify your TurtleBot model.</p>
+          <pre class="code-block p-3 rounded-lg text-sm overflow-x-auto"><code>export GEMINI_API_KEY="your_api_key_here"
+export TURTLEBOT3_MODEL="burger"</code></pre>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-800">
+          <h3 class="text-white font-semibold flex items-center gap-2">
+            <span class="bg-teal-500/20 text-teal-400 w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span>
+            Launch TurtleBot Bringup
+          </h3>
+          <p class="text-sm text-slate-400 my-2">Bring up the physical robot or Gazebo simulation environment.</p>
+          <pre class="code-block p-3 rounded-lg text-sm overflow-x-auto"><code>ros2 launch turtlebot3_bringup robot.launch.py</code></pre>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-800">
+          <h3 class="text-white font-semibold flex items-center gap-2">
+            <span class="bg-teal-500/20 text-teal-400 w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span>
+            Start the AI Companion Controller Node
+          </h3>
+          <p class="text-sm text-slate-400 my-2">Execute the main intent parsing and safety controller.</p>
+          <pre class="code-block p-3 rounded-lg text-sm overflow-x-auto"><code>ros2 run companion_ai voice_intent_controller</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Interactive Voice & Intent Reference -->
+    <section id="commands" class="space-y-6">
+      <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-microphone-lines text-teal-400"></i> Supported Intent Formats
+      </h2>
+      <p class="text-sm text-slate-400">The Gemini reasoning layer parses user speech into validated JSON structures:</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Sample Intent 1 -->
+        <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700">
+          <span class="text-xs font-semibold text-teal-400 uppercase">Movement Intent</span>
+          <p class="text-white font-medium my-1">"Move forward a bit and check the room"</p>
+          <pre class="code-block p-3 rounded-lg text-xs mt-3 overflow-x-auto"><code>{
+  "intent": "NAVIGATE_RELATIVE",
+  "parameters": {
+    "linear_x": 0.2,
+    "duration_sec": 3.0
+  },
+  "confidence": 0.98
+}</code></pre>
+        </div>
+
+        <!-- Sample Intent 2 -->
+        <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700">
+          <span class="text-xs font-semibold text-purple-400 uppercase">Companion/Dialogue Intent</span>
+          <p class="text-white font-medium my-1">"Remind me to take my medicine in 10 minutes"</p>
+          <pre class="code-block p-3 rounded-lg text-xs mt-3 overflow-x-auto"><code>{
+  "intent": "SET_REMINDER",
+  "parameters": {
+    "reminder_text": "Take medicine",
+    "timer_minutes": 10
+  },
+  "confidence": 0.95
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Safety & Diagnostics -->
+    <section id="safety" class="space-y-6">
+      <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Safety Rules & Diagnostic Checks
+      </h2>
+      <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-800 space-y-4">
+        <div class="flex items-start space-x-3">
+          <i class="fa-solid fa-check text-teal-400 mt-1"></i>
+          <div>
+            <h4 class="text-white font-medium text-sm">LiDAR Distance Threshold</h4>
+            <p class="text-xs text-slate-400">If obstacles are detected within 0.25 meters, velocity overrides automatically publish <code class="text-teal-300">0.0 m/s</code>.</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-3">
+          <i class="fa-solid fa-check text-teal-400 mt-1"></i>
+          <div>
+            <h4 class="text-white font-medium text-sm">Command Timeout Fallback</h4>
+            <p class="text-xs text-slate-400">Twist signals auto-expire after 200ms without fresh validated heartbeat pulses.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+
+</div>
+
+</body>
+</html>
